@@ -39,7 +39,6 @@ dependencies {
     // Create and its dependencies
     modImplementation("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}:slim") { isTransitive = false }
     modImplementation("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")
-    modImplementation("com.jozufozu.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_forge_version"()}")
 
     // Development QOL
     modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
@@ -53,6 +52,16 @@ dependencies {
     if ("enable_simple_voice_chat"().toBoolean()) {
         modLocalRuntime("maven.modrinth:simple-voice-chat:forge-${"voicechat_version"()}")
     }
+
+    // Ponder is now a separate library
+    modImplementation("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_forge_version}")
+    
+    // Update Flywheel to 1.0.2
+    modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${flywheel_forge_minecraft_version}:${flywheel_forge_version}")
+    modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${flywheel_forge_minecraft_version}:${flywheel_forge_version}")
+    
+    // New dependency - Vanillin
+    modRuntimeOnly("dev.engine-room.vanillin:vanillin-forge-${flywheel_forge_minecraft_version}:${vanillin_forge_version}")
 
     // mod compat for tracks
     if ("enable_hexcasting"().toBoolean()) {
@@ -98,8 +107,8 @@ dependencies {
         modLocalRuntime("curse.maven:securitycraft-64760:${"sc_version"()}")
     }
 
-    compileOnly("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")
-    annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-forge:${"mixin_extras_version"()}")!!)!!)
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}"))
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
 }
 
 publishMods {

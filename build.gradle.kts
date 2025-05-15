@@ -361,6 +361,8 @@ fun Project.setupRepositories() {
                 includeGroup("com.jozufozu.flywheel")
             }
         }
+        maven { url = uri("https://maven.createmod.net") } // For Ponder and Flywheel
+        maven { url = uri("https://maven.tterrag.com") } // For Registrate
         maven("https://maven.maxhenkel.de/repository/public") // Simple Voice Chat
         maven("https://maven.jamieswhiteshirt.com/libs-release") // Reach Entity Attributes
         exclusiveMaven("https://thedarkcolour.github.io/KotlinForForge/", "thedarkcolour") // KFF (Hex Casting dependency)
