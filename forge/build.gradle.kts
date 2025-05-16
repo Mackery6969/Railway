@@ -17,6 +17,8 @@
  */
 
 import dev.ithundxr.silk.ChangelogText
+import net.fabricmc.loom.api.LoomGradleExtensionAPI
+import dev.architectury.plugin.ArchitectPluginExtension
 
 architectury.forge()
 
@@ -34,34 +36,34 @@ loom {
 }
 
 dependencies {
-    forge("net.minecraftforge:forge:${"minecraft_version"()}-${"forge_version"()}")
+    forge("net.minecraftforge:forge:${"minecraft_version".call()}-${"forge_version".call()}")
 
     // Create and its dependencies
-    modImplementation("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}:slim") { isTransitive = false }
-    modImplementation("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")
+    modImplementation("com.simibubi.create:create-${"minecraft_version".call()}:${"create_forge_version".call()}:slim") { isTransitive = false }
+    modImplementation("com.tterrag.registrate:Registrate:${"registrate_forge_version".call()}")
 
     // Development QOL
-    modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
+    modLocalRuntime("dev.emi:emi-forge:${"emi_version".call()}")
 
     // Test with JourneyMap in dev
-    modLocalRuntime("maven.modrinth:journeymap:${"journeymap_version"()}-forge")
-    modCompileOnly("info.journeymap:journeymap-api:${"journeymap_api_version"()}-SNAPSHOT") // for some reason this is needed explicitly
+    modLocalRuntime("maven.modrinth:journeymap:${"journeymap_version".call()}-forge")
+    modCompileOnly("info.journeymap:journeymap-api:${"journeymap_api_version".call()}-SNAPSHOT")
 
-    modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version"()}")
+    modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version".call()}")
 
-    if ("enable_simple_voice_chat"().toBoolean()) {
-        modLocalRuntime("maven.modrinth:simple-voice-chat:forge-${"voicechat_version"()}")
+    if ("enable_simple_voice_chat".call().toBoolean()) {
+        modLocalRuntime("maven.modrinth:simple-voice-chat:forge-${"voicechat_version".call()}")
     }
 
     // Ponder is now a separate library
-    modImplementation("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_forge_version}")
+    modImplementation("net.createmod.ponder:Ponder-Forge-${"minecraft_version".call()}:${"ponder_forge_version".call()}")
     
     // Update Flywheel to 1.0.2
-    modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${flywheel_forge_minecraft_version}:${flywheel_forge_version}")
-    modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${flywheel_forge_minecraft_version}:${flywheel_forge_version}")
+    modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${"flywheel_forge_minecraft_version".call()}:${"flywheel_forge_version".call()}")
+    modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${"flywheel_forge_minecraft_version".call()}:${"flywheel_forge_version".call()}")
     
     // New dependency - Vanillin
-    modRuntimeOnly("dev.engine-room.vanillin:vanillin-forge-${flywheel_forge_minecraft_version}:${vanillin_forge_version}")
+    modRuntimeOnly("dev.engine-room.vanillin:vanillin-forge-${"flywheel_forge_minecraft_version".call()}:${"vanillin_forge_version".call()}")
 
     // mod compat for tracks
     if ("enable_hexcasting"().toBoolean()) {
@@ -107,8 +109,13 @@ dependencies {
         modLocalRuntime("curse.maven:securitycraft-64760:${"sc_version"()}")
     }
 
-    implementation(jarJar("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}"))
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
+    implementation("io.github.llamalad7:mixinextras-forge:${"mixin_extras_version".call()}")
+    annotationProcessor("io.github.llamalad7:mixinextras-common:${"mixin_extras_version".call()}")
+}
+
+fun String.call(): String {
+    return rootProject.ext[this] as? String
+        ?: throw IllegalStateException("Property $this is not defined")
 }
 
 publishMods {
