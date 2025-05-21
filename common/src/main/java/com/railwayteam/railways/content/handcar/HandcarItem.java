@@ -37,7 +37,7 @@ import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.content.trains.track.TrackTargetingBlockItem.OverlapResult;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.Lang;
+import net.createmod.catnip.lang.LangBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -107,8 +107,12 @@ public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
             });
 
             if (result.getValue().feedback != null) {
-                player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
-                    .withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(
+                    new LangBuilder("railways")
+                        .translate(result.getValue().feedback)
+                        .style(ChatFormatting.RED)
+                        .component(), 
+                    true);
                 AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                 return InteractionResult.FAIL;
             }

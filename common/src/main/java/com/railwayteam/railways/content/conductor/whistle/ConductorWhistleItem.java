@@ -45,7 +45,7 @@ import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockOutline;
 import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
 import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -222,8 +222,12 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
                 withGraphLocation(level, pos, front, null, type, (overlap, location) -> result.setValue(overlap));
 
                 if (result.getValue().feedback != null) {
-                    player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
-                            .withStyle(ChatFormatting.RED), true);
+                    player.displayClientMessage(
+                        new LangBuilder("railways")
+                            .translate(result.getValue().feedback)
+                            .style(ChatFormatting.RED)
+                            .component(), 
+                        true);
                     AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                     return InteractionResult.FAIL;
                 }

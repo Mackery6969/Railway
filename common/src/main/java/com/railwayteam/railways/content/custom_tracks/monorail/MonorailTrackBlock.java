@@ -40,7 +40,7 @@ import com.simibubi.create.content.trains.track.TrackPropagator;
 import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Pair;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

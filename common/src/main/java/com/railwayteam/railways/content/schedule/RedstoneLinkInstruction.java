@@ -96,8 +96,12 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
 
     @Override
     public List<Component> getSecondLineTooltip(int slot) {
-        return ImmutableList.of(Lang.translateDirect(slot == 0 ? "logistics.firstFrequency" : "logistics.secondFrequency")
-            .withStyle(ChatFormatting.RED));
+        return ImmutableList.of(
+            new LangBuilder("railways")
+                .translate(slot == 0 ? "logistics.firstFrequency" : "logistics.secondFrequency")
+                .style(ChatFormatting.RED)
+                .component()
+        );
     }
 
     private ItemStack icon() {
@@ -117,7 +121,9 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     @Override
     public List<Component> getTitleAs(String type) {
         return ImmutableList.of(
-            Lang.translateDirect("schedule.condition.redstone_link.frequency_powered"),
+            new LangBuilder("railways")
+                .translate("schedule.condition.redstone_link.frequency_powered")
+                .component(),
             Components.literal(" #1 ").withStyle(ChatFormatting.GRAY)
                 .append(freq.getFirst()
                     .getStack()

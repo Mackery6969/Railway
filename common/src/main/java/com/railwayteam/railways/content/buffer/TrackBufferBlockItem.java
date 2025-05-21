@@ -25,8 +25,8 @@ import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.lang.LangBuilder;
+import net.createmod.catnip.data.Pair;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -112,8 +112,12 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
             withGraphLocation(level, pos, front, null, type, (overlap, location) -> result.setValue(overlap));
             
             if (result.getValue().feedback != null) {
-                player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
-                        .withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(
+                    new LangBuilder("railways")
+                        .translate(result.getValue().feedback)
+                        .style(ChatFormatting.RED)
+                        .component(), 
+                    true);
                 AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                 return InteractionResult.FAIL;
             }
@@ -184,8 +188,12 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
         
         if (player != null) {
             
-            player.displayClientMessage(Lang.translateDirect("track_target.invalid")
-                    .withStyle(ChatFormatting.RED), true);
+            player.displayClientMessage(
+                new LangBuilder("railways")
+                    .translate("track_target.invalid")
+                    .style(ChatFormatting.RED)
+                    .component(), 
+                true);
             AllSoundEvents.DENY.play(level, player, player.position(), .5f, 1);
             return false;
         }

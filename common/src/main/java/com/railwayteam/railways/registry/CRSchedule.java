@@ -24,7 +24,8 @@ import com.railwayteam.railways.content.schedule.StationLoadedCondition;
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.simibubi.create.content.trains.schedule.condition.ScheduleWaitCondition;
 import com.simibubi.create.content.trains.schedule.destination.ScheduleInstruction;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Pair;
+import com.railwayteam.railways.util.CreateCompatUtil;
 
 import java.util.function.Supplier;
 
@@ -39,11 +40,11 @@ public class CRSchedule {
     }
 
     private static void registerInstruction(String name, Supplier<? extends ScheduleInstruction> factory) {
-        INSTRUCTION_TYPES.add(Pair.of(Railways.asResource(name), factory));
+        CreateCompatUtil.registerInstruction(name, Railways.asResource(name), factory);
     }
 
     private static void registerCondition(String name, Supplier<? extends ScheduleWaitCondition> factory) {
-        CONDITION_TYPES.add(Pair.of(Railways.asResource(name), factory));
+        CreateCompatUtil.registerCondition(name, Railways.asResource(name), factory);
     }
 
     public static void register() {}

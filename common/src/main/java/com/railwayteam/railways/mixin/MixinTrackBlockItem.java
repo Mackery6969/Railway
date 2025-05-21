@@ -20,7 +20,7 @@ package com.railwayteam.railways.mixin;
 
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockItem;
-import com.simibubi.create.foundation.utility.Lang;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -45,8 +45,12 @@ public class MixinTrackBlockItem {
         if (state.getBlock() instanceof ITrackBlock track && track.getTrackAxes(level, pos, state)
             .size() > 1) {
             if (!level.isClientSide)
-                player.displayClientMessage(Lang.translateDirect("track.junction_start")
-                    .withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(
+                    new LangBuilder("railways")
+                        .translate("track.junction_start")
+                        .style(ChatFormatting.RED)
+                        .component(), 
+                    true);
             cir.setReturnValue(InteractionResult.SUCCESS);
         }
     }

@@ -27,7 +27,7 @@ import com.simibubi.create.content.trains.entity.TrainIconType;
 import com.simibubi.create.content.trains.station.*;
 import com.simibubi.create.foundation.gui.widget.ScrollInput;
 import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.components.EditBox;
@@ -76,7 +76,11 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
         iconTypes = TrainIconType.REGISTRY.keySet()
                 .stream()
                 .toList();
-        iconTypeScroll = new ScrollInput(x + 4, y + 17, 184, 14).titled(Lang.translateDirect("station.icon_type"));
+        iconTypeScroll = new ScrollInput(x + 4, y + 17, 184, 14).titled(
+    new LangBuilder("railways")
+        .translate("station.icon_type")
+        .component()
+);
         iconTypeScroll.withRange(0, iconTypes.size());
         iconTypeScroll.withStepFunction(ctx -> -iconTypeScroll.standardStep()
                 .apply(ctx));
